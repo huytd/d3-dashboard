@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="lib/gridstack/gridstack.css" />
+        <link rel="stylesheet" href="lib/gridstack/gridstack-extra.css" />
+        <link href="css/style.css" rel="stylesheet" />
+    </head>
+    <body ng-app="DashboardApp">
+        <div ng-controller="DashboardCtrl">
+            <div class="control-panel">
+                <!-- <button class="btn btn-primary" ng-click="addNewWidget()">Add Widget</button> -->
+                <label>Facility: </label>
+                <select ng-model="facility" ng-change="changeSource()"
+                        ng-options="fac for fac in facilities"></select>
+            </div>
+            <!-- <flash-message type="info" text="<b>1</b> package is assigned to you. <a href='#'>Review</a>"></flash-message>
+            <flash-message type="warning" text="<b>2</b> documents is waiting your review/approval. <a href='#'>Review</a>"></flash-message> -->
+            <div gridstack options="options" class="grid-stack widgets-list">
+                <div gridstack-item ng-repeat="w in widgets" class="grid-stack-item" gs-item-x="w.x" gs-item-y="w.y"
+                     gs-item-width="w.width" gs-item-height="w.height" gs-item-autopos="w.autoLayout || 0" on-item-added="onItemAdded(item)" on-item-removed="onItemRemoved(item)">
+                        <div class="grid-stack-item-content widget-item">
+                            <groupped-bar-chart ng-if="w.type == 'groupped-bar-chart'" source="w"></groupped-bar-chart>
+                            <!-- <bar-chart ng-if="w.type == 'bar-chart'" source="w"></bar-chart> -->
+                        </div>
+                </div>
+            </div>
+        </div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-sanitize.js"></script>
+        <script src="lib/d3/d3.js"></script>
+        <script src="lib/gridstack/gridstack.js"></script>
+        <script src="lib/gridstack/gridstack-angular.js"></script>
+        <script src="js/dashboard.app.js"></script>
+        <script src="js/dashboard.directives.js"></script>
+    </body>
+</html>
