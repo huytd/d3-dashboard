@@ -5,7 +5,7 @@ app.controller('DashboardCtrl', function($scope) {
     $scope.facilities = ['IED', 'INF'];
     $scope.widgets = [
         {
-            x: 0, y: 0, width: 5, height: 5,
+            x: 0, y: 0, width: 6, height: 5,
             dataUrl: '/api/getWPSummary/' + $scope.facility,
             chartName: 'Work Packages by Unit',
             labels: {
@@ -38,39 +38,39 @@ app.controller('DashboardCtrl', function($scope) {
                 }, []);
             }
         },
-        // {
-        //     x: 5, y: 5, width: 5, height: 5,
-        //     dataUrl: '/api/getWPCheckout',
-        //     chartName: 'Packages Checked on Hourly basis',
-        //     labels: {
-        //         x: 'Hours', y: 'No. of Checkouts'
-        //     },
-        //     type: 'bar-chart',
-        //     fitData: function(data) {
-        //         var IS_CHECKED_OUT_INDEX = 2;
-        //         var CHECKED_OUT_INDEX = 4;
-        //
-        //         return data.QSResponse.QSResponseData.QSRow.reduce(function(arr, item) {
-        //             if (item != "") {
-        //                 var isCheckedOut = (item.QSColVal[IS_CHECKED_OUT_INDEX] === 'Y');
-        //                 if (isCheckedOut) {
-        //                     var checkOut = item.QSColVal[CHECKED_OUT_INDEX];
-        //                     console.log('Checkout:', item);
-        //                     var idx = arr.findIndex(function(e){ return e.key === checkOut });
-        //                     if (idx == -1) {
-        //                         arr.push({
-        //                             key: checkOut,
-        //                             value:1
-        //                         });
-        //                     } else {
-        //                         arr[i].value += 1;
-        //                     }
-        //                 }
-        //             }
-        //             return arr;
-        //         }, []);
-        //     }
-        // },
+        {
+            x: 6, y: 6, width: 6, height: 5,
+            dataUrl: '/api/getWPCheckout',
+            chartName: 'Packages Checked on Hourly basis',
+            labels: {
+                x: 'Hours', y: 'No. of Checkouts'
+            },
+            type: 'bar-chart',
+            fitData: function(data) {
+                var IS_CHECKED_OUT_INDEX = 2;
+                var CHECKED_OUT_INDEX = 4;
+                console.log('INput:', data);
+                return data.QSResponse.QSResponseData.QSRow.reduce(function(arr, item) {
+                    if (item !== "") {
+                        var isCheckedOut = (item.QSColVal[IS_CHECKED_OUT_INDEX] === 'Y');
+                        console.log('Checkout:', item);
+                        if (isCheckedOut) {
+                            var checkOut = item.QSColVal[CHECKED_OUT_INDEX].QSColVal;
+                            var idx = arr.findIndex(function(e){ return e.key === checkOut });
+                            if (idx == -1) {
+                                arr.push({
+                                    key: checkOut,
+                                    value:1
+                                });
+                            } else {
+                                arr[idx].value += 1;
+                            }
+                        }
+                    }
+                    return arr;
+                }, []);
+            }
+        },
     ];
 
     $scope.changeSource = function() {

@@ -56,8 +56,16 @@ bar-chart, groupped-bar-chart {
     overflow: hidden;
 }
 
+svg {
+    cursor: default;
+}
 
+.highlight {
+    stroke: #000;
+    fill: #000;
+}
 
-.rect-hover {
-    fill: #FFF;
+.bar.highlight {
+    stroke-width: 1px;
+    fill-opacity: 0.5;
 }
