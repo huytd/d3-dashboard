@@ -54,7 +54,13 @@ directives.directive('pieChart', function(d3Service, $http) {
                     if (!data) return;
 
                     var color = d3.scale.category20();
-
+                    function arcTween(a) {
+                      var i = d3.interpolate(this._current, a);
+                      this._current = i(0);
+                      return function(t) {
+                        return arc(i(t));
+                      };
+                    }
                     var pie = d3.layout.pie().value(function(d){ return d.value; });
                     var arc = d3.svg.arc().outerRadius(r);
                     var g = svg.data([data]).append("g").attr("class", "holder")
@@ -65,7 +71,7 @@ directives.directive('pieChart', function(d3Service, $http) {
                                     .append("g")
                                     .attr("class", "slice");
 
-                    arcs.append("path")
+                    var path = arcs.append("path")
                         .attr("fill", function(d, i){
                             return color(d.data.key);
                             //return google_colors(i);
@@ -74,7 +80,16 @@ directives.directive('pieChart', function(d3Service, $http) {
                             // log the result of the arc generator to show how cool it is :)
                             console.log(arc(d));
                             return arc(d);
-                        });
+                        })
+                        .transition().duration(800)
+                        .attrTween('d', function(d) {
+                           var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
+                           return function(t) {
+                               d.endAngle = i(t);
+                             return arc(d);
+                           }
+                        })
+
 
                     arcs.append("text").attr("transform", function(d){
             			d.innerRadius = 0;
