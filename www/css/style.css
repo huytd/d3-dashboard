@@ -49,7 +49,7 @@ html, body {
     background: #DDD;
 }
 
-bar-chart, groupped-bar-chart {
+bar-chart, groupped-bar-chart, horizontal-groupped-bar-chart, horizontal-bar-chart, pie-chart {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;

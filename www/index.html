@@ -21,8 +21,11 @@
                 <div gridstack-item ng-repeat="w in widgets" class="grid-stack-item" gs-item-x="w.x" gs-item-y="w.y"
                      gs-item-width="w.width" gs-item-height="w.height" gs-item-autopos="w.autoLayout || 0" on-item-added="onItemAdded(item)" on-item-removed="onItemRemoved(item)">
                         <div class="grid-stack-item-content widget-item">
+                            <horizontal-bar-chart ng-if="w.type == 'horizontal-bar-chart'" source="w"></horizontal-bar-chart>
+                            <horizontal-groupped-bar-chart ng-if="w.type == 'horizontal-groupped-bar-chart'" source="w"></horizontal-groupped-bar-chart>
                             <groupped-bar-chart ng-if="w.type == 'groupped-bar-chart'" source="w"></groupped-bar-chart>
                             <bar-chart ng-if="w.type == 'bar-chart'" source="w"></bar-chart>
+                            <pie-chart ng-if="w.type == 'pie-chart'" source="w"></pie-chart>
                         </div>
                 </div>
             </div>
